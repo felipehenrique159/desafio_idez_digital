@@ -37,6 +37,14 @@ services:
     networks:
       - network_default
 
+  spa:
+    build: './spa'
+    container_name: spa
+    ports:
+      - '3000:3000'
+    networks:
+      - network_default
+
 networks:
   network_default:
     driver: bridge
