@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Services\Providers\BrasilApiProvider;
 use App\Services\Providers\IbgeApiProvider;
-
+use Illuminate\Support\Facades\Cache;
 class CitiesService
 {
     protected $provider;
@@ -16,7 +16,11 @@ class CitiesService
 
     public function listByUf(string $uf): array
     {
-        return $this->provider->getCities($uf);
+        $cacheKey = "cities_{$uf}_" . env('CITIES_PROVIDER');
+
+        return Cache::remember($cacheKey, 60 * 60, function () use ($uf) {
+            return $this->provider->getCities($uf);
+        });
     }
 
     private function setProvider()
