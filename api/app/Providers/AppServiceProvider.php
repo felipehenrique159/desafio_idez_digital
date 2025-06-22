@@ -25,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
             $cache = $app->make('cache');
             return new \App\Services\CitiesService($provider, $cache);
         });
+
+        $this->app->register(\L5Swagger\L5SwaggerServiceProvider::class);
     }
 
     /**
