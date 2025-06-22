@@ -16,15 +16,15 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(\App\Services\CitiesService::class, function ($app) {
-        $providerName = env('CITIES_PROVIDER', 'brasilapi');
-        if ($providerName === 'brasilapi') {
-            $provider = new BrasilApiProvider();
-        } else {
-            $provider = new IbgeApiProvider();
-        }
-        $cache = $app->make('cache');
-        return new \App\Services\CitiesService($provider, $cache);
-    });
+            $providerName = env('CITIES_PROVIDER', 'brasilapi');
+            if ($providerName === 'brasilapi') {
+                $provider = new BrasilApiProvider();
+            } else {
+                $provider = new IbgeApiProvider();
+            }
+            $cache = $app->make('cache');
+            return new \App\Services\CitiesService($provider, $cache);
+        });
     }
 
     /**
