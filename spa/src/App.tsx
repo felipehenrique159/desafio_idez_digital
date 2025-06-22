@@ -36,7 +36,7 @@ function App() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get<ApiResponse>(`http://localhost:80/api/cities/${selectedUf.toLowerCase()}`, {
+      .get<ApiResponse>(`http://localhost:8000/api/cities/${selectedUf.toLowerCase()}`, {
         params: { search, page, per_page: perPage }
       })
       .then(res => {
