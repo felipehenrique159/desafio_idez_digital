@@ -1,64 +1,145 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Desafio Idez Digital
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Sobre a aplicação
 
-## About Laravel
+Este projeto consiste em uma aplicação para consulta de cidades brasileiras por estado (UF), com busca por nome, paginação e documentação interativa da API. O backend foi desenvolvido em **Laravel** e o frontend em **React**.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Instruções para rodar a aplicação com Docker
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Na pasta `api`, crie uma cópia do arquivo **.env.example** com o nome **.env**.
+2. No .env já tem as default url dos 2 providers definidos para o desafio (**URL_BRASIL_API** e **URL_IBGE_API**) a escolha do provider é definido na variável **CITIES_PROVIDER**
+3. Na raiz do projeto, execute o comando abaixo para subir todos os containers (API, Nginx, Redis, SPA):
 
-## Learning Laravel
+   ```
+   docker-compose up --build
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+   Isso irá disponibilizar a API e o frontend
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## Endereços principais
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- **Frontend (SPA):** [http://localhost](http://localhost)
+- **API:** [http://localhost:8000/api](http://localhost:8000/api)
+- **Documentação Swagger:** [http://localhost:8000/api/docs](http://localhost:8000/api/docs)
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Principais rotas da API
 
-## Contributing
+### GET `/api/cities/{uf}`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Lista cidades de um estado (UF).
+- Suporta busca por nome, paginação e quantidade de itens por página.
 
-## Code of Conduct
+**Parâmetros:**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- `uf` (obrigatório): Sigla do estado (ex: `MG`, `SP`, `RJ`)
+- `search` (opcional): Filtro por nome da cidade
+- `page` (opcional): Número da página (default: 1)
+- `per_page` (opcional): Itens por página (default: 10)
 
-## Security Vulnerabilities
+**Exemplo de requisição:**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+GET /api/cities/MG?search=Uber&page=1&per_page=10
+```
 
-## License
+**Exemplo de resposta:**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```json
+{
+  "data": [
+    {
+      "name": "Uberaba",
+      "ibge_code": "3170107"
+    },
+    {
+      "name": "Uberlândia",
+      "ibge_code": "3170206"
+    }
+  ],
+  "current_page": 1,
+  "last_page": 1,
+  "total": 2
+}
+```
+
+---
+
+## Documentação da API (Swagger)
+
+Acesse [http://localhost:8000/api/docs](http://localhost:8000/api/docs) para visualizar e testar todos os endpoints da API de forma interativa.
+
+---
+
+## Tecnologias e bibliotecas utilizadas
+
+- **Backend:** Laravel, PHP, Redis, L5 Swagger
+- **Frontend:** React, Typescript, Bootstrap
+- **Infra:** Docker, Docker Compose, Nginx
+
+---
+
+## Observações
+
+- O frontend consome a API diretamente e permite selecionar o estado, buscar cidades por nome, navegar por páginas e escolher a quantidade de itens exibidos.
+- O projeto já está pronto para desenvolvimento local via Docker, sem necessidade de instalar dependências manualmente.
+
+---
+
+## Scripts úteis
+
+### Rodar apenas o frontend localmente (fora do Docker)
+
+1. Entre na pasta `spa`:
+
+   ```
+   cd spa
+   ```
+2. Instale as dependências:
+
+   ```
+   npm install
+   ```
+3. Inicie o servidor de desenvolvimento:
+
+   ```
+   npm start
+   ```
+
+   O frontend estará disponível em [http://localhost:3000](http://localhost:3000).
+
+---
+
+### Rodar apenas a API localmente (fora do Docker)
+
+1. Entre na pasta `api`:
+
+   ```
+   cd api
+   ```
+2. Instale as dependências do PHP:
+
+   ```
+   composer install
+   ```
+3. Copie o arquivo de ambiente:
+
+   ```
+   cp .env.example .env
+   ```
+4. Gere a chave da aplicação:
+
+   ```
+   php artisan key:generate
+   ```
+5. Inicie o servidor:
+
+   ```
+   php artisan serve
+   ```
+   A API estará disponível em [http://localhost:8000](http://localhost:8000).
