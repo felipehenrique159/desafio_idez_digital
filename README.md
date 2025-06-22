@@ -115,6 +115,17 @@ O projeto está preparado para receber novos endpoints e integrações, bastando
 
 ---
 
+## Integração Contínua (CI)
+
+O projeto utiliza **GitHub Actions** para rodar automaticamente os testes a cada push ou pull request na branch principal (master).
+O workflow está configurado em `.github/workflows/ci.yml` e executa todos os testes da API em um ambiente com PHP 8.3, igual ao ambiente de Docker.
+
+Esse processo é fundamental para garantir que, em um eventual deploy, nenhuma alteração com erro seja enviada para produção, aumentando a confiabilidade e a qualidade do projeto.
+
+Você pode acompanhar as execuções e resultados dos testes na aba **Actions** do repositório no GitHub.
+
+---
+
 ## Scripts úteis
 
 ### Rodar apenas o frontend localmente (fora do Docker)
