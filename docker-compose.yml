@@ -21,7 +21,7 @@ services:
     container_name: nginx
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8000:8000"
     volumes:
       - ./api:/var/www
       - ./infra/nginx:/etc/nginx/templates
@@ -41,7 +41,7 @@ services:
     build: './spa'
     container_name: spa
     ports:
-      - '3000:3000'
+      - '80:3000'
     networks:
       - network_default
 
