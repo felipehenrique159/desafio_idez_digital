@@ -84,6 +84,30 @@ Acesse [http://localhost:8000/api/docs](http://localhost:8000/api/docs) para vis
 
 ---
 
+## Detalhes do Projeto
+
+### Arquitetura
+
+O backend foi desenvolvido em Laravel, seguindo o padrão de Service Providers para integração com múltiplas APIs externas. O provider utilizado pode ser facilmente alterado via variável de ambiente (`CITIES_PROVIDER`), facilitando a manutenção e expansão para novos provedores no futuro.
+
+- **Providers:** Camada responsável por consumir APIs externas (BrasilAPI, IBGE, etc).
+- **Services:** Camada intermediária que orquestra providers, cache e regras de negócio.
+- **Controllers:** Responsáveis por receber as requisições HTTP e retornar as respostas no formato esperado.
+- **Cache:** Implementado para otimizar consultas repetidas e reduzir chamadas externas.
+- **Testes:** Cobrem unidades e integração dos principais fluxos.
+
+### Expansão
+
+O projeto está preparado para receber novos endpoints e integrações, bastando criar novos Providers e Services conforme necessário. A documentação da API está disponível via Swagger em `/api/docs`.
+
+### Convenções
+
+- Commits atômicos e descritivos.
+- Código seguindo PSR e boas práticas do Laravel.
+- Testes automatizados para garantir qualidade e facilitar refatorações futuras.
+
+---
+
 ## Observações
 
 - O frontend consome a API diretamente e permite selecionar o estado, buscar cidades por nome, navegar por páginas e escolher a quantidade de itens exibidos.
@@ -143,3 +167,14 @@ Acesse [http://localhost:8000/api/docs](http://localhost:8000/api/docs) para vis
    php artisan serve
    ```
    A API estará disponível em [http://localhost:8000](http://localhost:8000).
+
+
+### Rodar os testes (unitários e integração)
+
+Para executar todos os testes da API:
+```bash
+cd api
+php artisan test
+```
+
+Os testes cobrem os principais fluxos da aplicação, incluindo integração com os providers externos, cache e tratamento de exceções.
