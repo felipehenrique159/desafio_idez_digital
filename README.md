@@ -16,7 +16,7 @@ Este projeto consiste em uma aplicação para consulta de cidades brasileiras po
    docker-compose up --build
    ```
 
-   Isso irá disponibilizar a API e o frontend
+   Isso irá disponibilizar a API e o frontend (A instalação de dependências do laravel pode demorar um pouco caso não esteja em cache, assim que finalizar a instalação o projeto estará pronto para uso)
 
 ---
 
