@@ -8,11 +8,10 @@ services:
     container_name: laravel
     restart: unless-stopped
     working_dir: /var/www/
-    env_file:
-      - api/.env
     volumes:
       - ./api:/var/www/
       - ./api/supervisor/conf.d:/etc/supervisor/conf.d
+    command: bash -c "if [ ! -f .env ]; then cp .env.example .env; fi && ([ -d vendor ] || composer install --no-interaction --prefer-dist --optimize-autoloader) && php-fpm"
     networks:
       - network_default
 
