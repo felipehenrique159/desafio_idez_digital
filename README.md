@@ -8,7 +8,7 @@ Este projeto consiste em uma aplicação para consulta de cidades brasileiras po
 
 ## Instruções para rodar a aplicação com Docker
 
-1. Na pasta `api`, crie uma cópia do arquivo **.env.example** com o nome **.env**.
+1. O **.env** é copiado do **.env.example** automaticamente na pasta api ao executar o comando de subida dos containers, mas caso queira realizar a copia do .env.example manualmente, ir pasta `api`, crie uma cópia do arquivo **.env.example** com o nome **.env**.
 2. No .env já tem as default url dos 2 providers definidos para o desafio (**URL_BRASIL_API** e **URL_IBGE_API**) a escolha do provider é definido na variável **CITIES_PROVIDER**
 3. Na raiz do projeto, execute o comando abaixo para subir todos os containers (API, Nginx, Redis, SPA):
 
@@ -177,12 +177,13 @@ Você pode acompanhar as execuções e resultados dos testes na aba **Actions** 
    ```
    php artisan serve
    ```
-   A API estará disponível em [http://localhost:8000](http://localhost:8000).
 
+   A API estará disponível em [http://localhost:8000](http://localhost:8000).
 
 ### Rodar os testes (unitários e integração)
 
 Para executar todos os testes da API:
+
 ```bash
 cd api
 php artisan test
